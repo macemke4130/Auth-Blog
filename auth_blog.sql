@@ -27,3 +27,4 @@ create table blogs (
     updated_at timestamp default now() on update now()
 );
 select * from blogs;
+update blogs set is_visible = 1 where id = 1;
