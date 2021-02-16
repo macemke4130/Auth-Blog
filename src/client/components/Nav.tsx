@@ -3,14 +3,17 @@ import { useState, useEffect } from "react";
 import { Link, useHistory } from 'react-router-dom'
 
 const Nav = (props: NavProps) => {
-    // LocalStorage only stores String Types. This sets them to Booleans so that I can use cleaner ternarys below --
+    // LocalStorage only stores String Types.
+    // This sets them to Booleans so that I can use cleaner ternarys below.
+    // I know I could look for the Token, but this made more sense to me --
     let isAuth: string | boolean = localStorage.getItem("isAuth");
     if (isAuth === "true"){isAuth = true};
     if (isAuth === "false"){isAuth = false};
+
     const history = useHistory();
 
     const handleLogout = () => {
-        localStorage.clear();
+        localStorage.removeItem("token");
         localStorage.setItem("isAuth", "false");
         history.push("/login");
     }

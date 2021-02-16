@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import Nav from '../components/Nav';
 import apiService from '../utils/api-service';
+import renavigateIfLoggedIn from '../utils/renavigate';
 
 const Login = (props: LoginProps) => {
     const [theEmail, setTheEmail] = useState('');
@@ -41,11 +42,8 @@ const Login = (props: LoginProps) => {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            console.log("Renavigate. Already logged in.");
-            //history.push('/');
-        }
+        const isAuth = renavigateIfLoggedIn();
+        isAuth ? history.push('/profile') : null;
     }, [])
 
     return (

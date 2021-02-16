@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { Route, Redirect } from 'react-router-dom'
 
 const PrivateRoute = ({ children, ...rest }: PrivateRouteProps) => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    const isAuth = localStorage.getItem('isAuth');
+    if (isAuth) {
         return (
             <Route {...rest}>
                 {children}

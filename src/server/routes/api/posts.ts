@@ -28,8 +28,9 @@ router.post('/', passport.authenticate('jwt'), async (req: any, res) => { // pas
     const newPost = req.body;
     try { //insert userid = req.user.userid --
         newPost.user_id = req.user.id;
-        await db.posts.insert(newPost);
-        res.json({ message: 'new post inserted', newPost });
+        const r = await db.posts.insert(newPost);
+        const newPostId = r.insertId;
+        res.json({ message: 'new post inserted', newPost,  newPostId});
     } catch (e) {
         console.log(e);
         res.status(500).json({ message: "isuckatcode", e });

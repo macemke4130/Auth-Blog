@@ -1,4 +1,4 @@
-const apiService = async <T = any>(uri: string, method: string = "GET", body?: {}) => {
+const apiService = async <T = any>(uri: string, method: "GET" | "POST" | "PUT" = "GET", body?: {}) => {
     const headers: any = {    };
     const options: any = {
         method,

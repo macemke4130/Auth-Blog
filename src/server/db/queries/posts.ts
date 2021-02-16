@@ -1,7 +1,7 @@
 import { Query } from '../';
 import { MySQLResponse, PostsTable } from '../models';
 
-const all = () => Query('select blogs.*, users.username from blogs join users on users.id = blogs.user_id where blogs.is_visible = 1');
+const all = () => Query('select blogs.*, users.username from blogs join users on users.id = blogs.user_id where blogs.is_visible = 1 order by id desc');
 
 const one = (id: number) => Query('select blogs.*, users.username from blogs join users on users.id = blogs.user_id where blogs.is_visible = 1 and blogs.id = ?', [id]);
 

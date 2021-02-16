@@ -18,7 +18,6 @@ const Details = (props: DetailsProps) => {
     return (
         <>
             <Nav />
-            <h1>Details Page for {id}</h1>
             <div>
                 <h3>{post?.title}</h3>
                 <div><small>Written by </small><span>{post?.username}</span></div>

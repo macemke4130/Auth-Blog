@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
+import Compose from './pages/Compose';
 import Details from './pages/Details';
 import FourOhFour from './pages/FourOhFour';
 import Home from './pages/Home';
@@ -36,8 +37,11 @@ const App = (props: AppProps) => {
 				<Route path="/details/:id">
 					<Details />
 				</Route>
-				<PrivateRoute path="/profile/">
-					{Profile}
+				<PrivateRoute path="/profile">
+					<Profile />
+				</PrivateRoute>
+				<PrivateRoute path="/compose">
+					<Compose />
 				</PrivateRoute>
 				<Route path="*">
 					<FourOhFour/>
