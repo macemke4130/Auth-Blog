@@ -2,11 +2,13 @@ import { Request } from 'express';
 import { UsersTable } from '../db/models';
 
 export interface IPayload {
+    id?: number,
     userid: number,
     email: string,
     username: string
 }
 
 export interface ReqUser extends Request {
-    user?: UsersTable | IPayload;
+    id?: number,
+    user?: UsersTable | IPayload
 }

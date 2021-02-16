@@ -25,3 +25,4 @@ create table blogs (
     updated_at timestamp default now() on update now()
 );
 select * from blogs;
+delete from blogs where id > 2;
