@@ -28,11 +28,12 @@ const Login = (props: LoginProps) => {
         }
         try{
             const r = await fetch("/auth/login/", myMethod);
-            let token = await r.json();
-            if (token) {
-                history.push('/');
+            if(r.ok) {
+                let token = await r.json();
+                console.log("RESPONSE FROM SERVER: " + token);
+            } else {
+                throw new Error('Failed');
             }
-            console.log("RESPONSE FROM SERVER: " + token);
         } catch (e) {
             console.log(e);
         }

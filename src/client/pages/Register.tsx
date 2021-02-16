@@ -34,15 +34,24 @@ const Register = (props: RegisterProps) => {
         }
         try{
             const r = await fetch("/auth/register/", myMethod);
-            let token = await r.json();
-            if (token) {
-                history.push('/');
+            if(r.ok) {
+                const token = await r.json();
+                localStorage.setItem('token', token);
+            } else {
+                throw new Error('Failed');
             }
-            console.log("RESPONSE FROM SERVER: " + token);
         } catch (e) {
             console.log(e);
         }
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(token) {
+            console.log("Renavigate. Already logged in.");
+            //history.push('/');
+        }
+    }, [])
 
     return (
         <>
