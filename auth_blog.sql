@@ -13,6 +13,7 @@ create table users (
     created_at timestamp default now()
 );
 select * from users;
+delete from users where id > 0;
 
 create table blogs (
 	id int primary key auto_increment not null,

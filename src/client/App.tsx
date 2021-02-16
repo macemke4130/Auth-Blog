@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import Details from './pages/Details';
+import FourOhFour from './pages/FourOhFour';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -13,7 +14,7 @@ const App = (props: AppProps) => {
 	React.useEffect(() => {
 		(async () => {
 			try {
-				
+
 			} catch (error) {
 				console.log(error);
 			}
@@ -23,13 +24,24 @@ const App = (props: AppProps) => {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path="/" component={Home}></Route>
-				<Route path="/login" component={Login}></Route>
-				<Route path="/register" component={Register}></Route>
-				<Route path="/details/:id" component={Details}></Route>
-				<PrivateRoute path="/profile/:id">
+				<Route exact path="/">
+					<Home />
+				</Route>
+				<Route path="/login">
+					<Login />
+				</Route>
+				<Route path="/register">
+					<Register />
+				</Route>
+				<Route path="/details/:id">
+					<Details />
+				</Route>
+				<PrivateRoute path="/profile/">
 					{Profile}
 				</PrivateRoute>
+				<Route path="*">
+					<FourOhFour/>
+				</Route>
 			</Switch>
 		</Router>
 	);

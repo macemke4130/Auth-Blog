@@ -3,18 +3,20 @@ import { useState, useEffect } from "react";
 import { IPost } from '../utils/types';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
+import apiService from '../utils/api-service';
+import Nav from '../components/Nav';
 
 const Home = (props: HomeProps) => {
     const [posts, setPosts] = useState<IPost[]>([]);
 
     useEffect(() => {
-        fetch('/api/posts')
-            .then(r => r.json())
+        apiService('/api/posts')
             .then(posts => setPosts(posts));
     }, []);
 
     return (
         <>
+            <Nav />
             <h1>Home Page</h1>
             {posts?.map(post => (
                 <div key={post.id}>

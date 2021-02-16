@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
+import Nav from '../components/Nav';
+import apiService from '../utils/api-service';
 
 const Register = (props: RegisterProps) => {
     const [theEmail, setTheEmail] = useState('');
@@ -27,21 +29,13 @@ const Register = (props: RegisterProps) => {
             password: thePassword,
             username: theUsername
         }
-        const myMethod = {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json; charset=UTF-8' },
-            body: JSON.stringify(bodyObject)
-        }
-        try{
-            const r = await fetch("/auth/register/", myMethod);
-            if(r.ok) {
-                const token = await r.json();
-                localStorage.setItem('token', token);
-            } else {
-                throw new Error('Failed');
-            }
-        } catch (e) {
-            console.log(e);
+
+       const token = await apiService("/auth/register/", "POST", bodyObject);
+        if (token) {
+            localStorage.setItem('token', token);
+            history.push('/profile');
+        } else {
+            console.log("Fail.");
         }
     }
 
@@ -55,6 +49,7 @@ const Register = (props: RegisterProps) => {
 
     return (
         <>
+            <Nav />
             <h1>Register Page</h1>
             <input type="email" placeholder="email" onChange={handleEmailChange}></input>
             <input type="text" placeholder="username" onChange={handleUsernameChange}></input>

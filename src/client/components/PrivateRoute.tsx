@@ -2,12 +2,12 @@ import * as React from 'react';
 import { useState, useEffect } from "react";
 import { Route, Redirect } from 'react-router-dom'
 
-const PrivateRoute = (props: PrivateRouteProps) => {
+const PrivateRoute = ({ children, ...rest }: PrivateRouteProps) => {
     const token = localStorage.getItem('token');
     if (token) {
         return (
-            <Route exact={props.exact} path={props.path}>
-                {props.children}
+            <Route {...rest}>
+                {children}
             </Route>
         );
     } else {
