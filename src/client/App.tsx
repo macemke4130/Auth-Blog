@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Details from './pages/Details';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -10,9 +11,7 @@ const App = (props: AppProps) => {
 	React.useEffect(() => {
 		(async () => {
 			try {
-				const res = await fetch('/api/hello');
-				const greeting = await res.json();
-				setGreeting(greeting);
+				
 			} catch (error) {
 				console.log(error);
 			}
@@ -25,6 +24,7 @@ const App = (props: AppProps) => {
 				<Route exact path="/" component={Home}></Route>
 				<Route path="/login" component={Login}></Route>
 				<Route path="/register" component={Register}></Route>
+				<Route path="/details/:id" component={Details}></Route>
 			</Switch>
 		</Router>
 	);

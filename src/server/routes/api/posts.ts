@@ -4,7 +4,17 @@ import db from '../../db';
 
 const router = express.Router();
 
-router.get('/', passport.authenticate('jwt'), async (req, res) => { // passport.authenticate('jwt') makes this route private --
+router.get('/:id', async (req, res) => { 
+    try {
+       const [post] = await db.posts.one(Number(req.params.id));
+       res.json(post);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "isuckatcode", e });
+    }
+});
+
+router.get('/', async (req, res) => { 
     try {
        const posts = await db.posts.all();
        res.json(posts);
@@ -14,7 +24,7 @@ router.get('/', passport.authenticate('jwt'), async (req, res) => { // passport.
     }
 });
 
-router.post('/', passport.authenticate('jwt'), async (req: any, res) => {
+router.post('/', passport.authenticate('jwt'), async (req: any, res) => { // passport.authenticate('jwt') makes this route private --
     const newPost = req.body;
     try { //insert userid = req.user.userid --
         newPost.user_id = req.user.id;
