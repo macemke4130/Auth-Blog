@@ -20,12 +20,12 @@ const Nav = (props: NavProps) => {
 
     return (
         <nav className="d-flex justify-content-center mb-2">
-            <Link to="/"><button className="btn btn-primary">Home</button></Link>
-            {isAuth ? <Link to="/compose"><button className="btn btn-primary">Compose</button></Link> : "" }
-            {isAuth ? <Link to="/profile"><button className="btn btn-primary">Profile</button></Link> : "" }
-            {isAuth ? "" : <Link to="/register"><button className="btn btn-primary">Register</button></Link> }
-            {isAuth ? "" : <Link to="/login"><button className="btn btn-primary">LogIn</button></Link> }
-            {isAuth ? <button className="btn btn-primary" onClick={handleLogout}>Logout</button> : "" }
+            <Link to="/"><button className="btn btn-primary m-2">Home</button></Link>
+            {isAuth ? <Link to="/compose"><button className="btn btn-primary m-2">Compose</button></Link> : "" }
+            {isAuth ? <Link to="/profile"><button className="btn btn-primary m-2">Profile</button></Link> : "" }
+            {isAuth ? "" : <Link to="/register"><button className="btn btn-primary m-2">Register</button></Link> }
+            {isAuth ? "" : <Link to="/login"><button className="btn btn-primary m-2">Log In</button></Link> }
+            {isAuth ? <button className="btn btn-primary m-2" onClick={handleLogout}>Log Out</button> : "" }
         </nav>
     );
 

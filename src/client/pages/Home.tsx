@@ -14,20 +14,30 @@ const Home = (props: HomeProps) => {
             .then(posts => setPosts(posts));
     }, []);
 
-    return (
-        <>
-            <Nav />
-            <h1>Home Page</h1>
-            {posts?.map(post => (
-                <div key={post.id}>
-                    <h3><Link to={"/details/" + post.id}>{post.title}</Link></h3>
-                    <div><small>Written by </small><span>{post.username}</span></div>
-                    <div><small>Pubished </small><span><Moment format="MMMM DD, YYYY H:mm">{post.created_at}</Moment></span></div>
-                    <p>{post.content}</p>
-                </div>
-            ))}
-        </>
-    );
+    if (posts.length === 0) {
+        return (
+            <>
+                <Nav />
+                <h3>No blogs posted yet!</h3>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <Nav />
+                {posts?.map(post => (
+                    <div key={post.id}>
+                        <h3><Link to={"/details/" + post.id}>{post.title}</Link></h3>
+                        <div><small>Written by </small><span>{post.username}</span></div>
+                        <div><small>Pubished </small><span><Moment format="MMMM DD, YYYY H:mm">{post.created_at}</Moment></span></div>
+                        <p>{post.content}</p>
+                        <hr></hr>
+                    </div>
+                ))}
+            </>
+        );
+    }
+
 };
 
 interface HomeProps { }

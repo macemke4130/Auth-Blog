@@ -5,15 +5,24 @@ import { IPost } from '../utils/types';
 import Moment from 'react-moment';
 import apiService from '../utils/api-service';
 import Nav from '../components/Nav';
-import { verify } from 'jsonwebtoken';
 
 const EditBlog = (props: EditBlogProps) => {
     const { id } = useParams<{ id: string }>();
     const [post, setPost] = useState<IPost>(null);
+    const [theContent, setTheContent] = useState<string>('');
+    const [theTitle, setTheTitle] = useState<string>('');
 
     let whoIsLoggedIn: number = 0;
     let whoWroteThisPost: number | null = null;
     const history = useHistory();
+
+    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setTheContent(e.target.value);
+    }
+
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTheTitle(e.target.value);
+    }
 
     const verifyUser = () => {
         if (whoIsLoggedIn != whoWroteThisPost) {
@@ -24,10 +33,27 @@ const EditBlog = (props: EditBlogProps) => {
         }
     }
 
+    const submitEdit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        const bodyObject = {
+            title: theTitle,
+            content: theContent
+        }
+        const r = await apiService('/api/posts/edit/' + id, "PUT", bodyObject);
+        history.push("/details/" + id);
+    }
+
+    const destroyBlog = async () => {
+        const r = await apiService('/api/posts/destroy/' + id, "PUT");
+        history.push("/");
+    }
+
     const getPost = () => {
         apiService('/api/posts/' + id)
             .then(post => {
-                setPost(post)
+                setTheTitle(post.title);
+                setTheContent(post.content);
                 whoWroteThisPost = post.user_id;
                 verifyUser();
             });
@@ -44,12 +70,14 @@ const EditBlog = (props: EditBlogProps) => {
     return (
         <>
             <Nav />
-            <div>
-                <h3>{post?.title}</h3>
+            <form>
+                <input type="text" placeholder="Blog Title" onChange={handleTitleChange} value={theTitle} />
                 <div><small>Written by </small><span>{post?.username}</span></div>
                 <div><small>Pubished </small><span><Moment format="MMMM DD, YYYY H:mm">{post?.created_at}</Moment></span></div>
-                <p>{post?.content}</p>
-            </div>
+                <textarea placeholder="Blog Content" rows={10} cols={100} value={theContent} onChange={handleContentChange}></textarea>
+                <button onClick={submitEdit} className="btn btn-primary">Submit Edit</button>
+            </form>
+            <button onClick={destroyBlog} className="btn btn-danger">Delete Blog Post?</button>
         </>
     );
 };

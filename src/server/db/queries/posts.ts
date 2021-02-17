@@ -9,6 +9,8 @@ const insert = (newPost: any) => Query<MySQLResponse>('Insert into blogs set ?',
 
 const find = (column: string, value: string | number) => Query<PostsTable[]>('select * from blogs where ?? = ?', [column, value]);
 
+const editBlog = (id: number, editedPost: any) => Query('update blogs set ? where id = ?', [editedPost, id]);
+
 const destroy = (id: number) => Query('update blogs set is_visible = 0 where id = ?', [id]);
 
 export default {
@@ -16,5 +18,6 @@ export default {
     one,
     insert,
     find,
+    editBlog,
     destroy
 }

@@ -12,8 +12,6 @@ create table users (
     is_visible bool default true,
     created_at timestamp default now()
 );
-select * from users;
-delete from users where id > 0;
 
 create table blogs (
 	id int primary key auto_increment not null,
@@ -24,5 +22,3 @@ create table blogs (
     created_at timestamp default now(),
     updated_at timestamp default now() on update now()
 );
-select * from blogs;
-delete from blogs where id != 21;

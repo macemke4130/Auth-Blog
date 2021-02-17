@@ -26,11 +26,35 @@ router.get('/', async (req, res) => {
 
 router.post('/', passport.authenticate('jwt'), async (req: any, res) => { // passport.authenticate('jwt') makes this route private --
     const newPost = req.body;
-    try { //insert userid = req.user.userid --
+    try {
         newPost.user_id = req.user.id;
         const r = await db.posts.insert(newPost);
         const newPostId = r.insertId;
         res.json({ message: 'new post inserted', newPost, newPostId });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "Nope.", e });
+    }
+});
+
+router.put('/edit/:id', passport.authenticate('jwt'), async (req: any, res) => { // passport.authenticate('jwt') makes this route private --
+    const editedPost = req.body;
+    const id = req.params.id;
+    try {
+        editedPost.user_id = req.user.id;
+        const r = await db.posts.editBlog(id, editedPost);
+        res.json({ message: 'blog post updated'});
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "Nope.", e });
+    }
+});
+
+router.put('/destroy/:id', passport.authenticate('jwt'), async (req: any, res) => { // passport.authenticate('jwt') makes this route private --
+    const blogId = req.params.id;
+    try {
+        const r = await db.posts.destroy(blogId);
+        res.json({ message: 'blog post destroyed'});
     } catch (e) {
         console.log(e);
         res.status(500).json({ message: "Nope.", e });

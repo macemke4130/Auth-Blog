@@ -13,10 +13,12 @@ const Details = (props: DetailsProps) => {
     const [whoWroteThisPost, setWhoWroteThisPost] = useState<number>(0);
 
     useEffect(() => {
-        apiService('/api/users/who')
-            .then(who => {
-                setWhoIsLoggedIn(who);
-            });
+        if (localStorage.getItem('isAuth') === 'true') {
+            apiService('/api/users/who')
+                .then(who => {
+                    setWhoIsLoggedIn(who);
+                });
+        }
 
         apiService('/api/posts/' + id)
             .then(post => {

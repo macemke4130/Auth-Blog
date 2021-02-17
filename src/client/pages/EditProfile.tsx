@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState, useEffect } from "react";
 import Nav from '../components/Nav';
 import apiService from '../utils/api-service';
-import Moment from 'react-moment';
 import { useHistory } from 'react-router-dom';
 
 const EditProfile = (props: EditProfileProps) => {
@@ -55,8 +54,8 @@ const EditProfile = (props: EditProfileProps) => {
             <Nav />
 
             <form>
-                <input type="text" value={theUsername} onChange={handleUsernameChange} />
-                <input type="text" value={theEmail} onChange={handleEmailChange} />
+                <input type="text" placeholder="Username" value={theUsername} onChange={handleUsernameChange} />
+                <input type="text" placeholder="Email" value={theEmail} onChange={handleEmailChange} />
                 <button onClick={handleSubmit}>Submit Changes</button>
             </form>
 
