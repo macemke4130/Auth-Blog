@@ -30,6 +30,30 @@ router.use('/name', passport.authenticate('jwt'), async (req: ReqUser, res) => {
     }
 });
 
+router.use('/editprofile', passport.authenticate('jwt'), async (req: ReqUser, res) => {
+    try {
+        const userid = req.user.id;
+        const username = req.body.username;
+        const email = req.body.email;
+        const r = await db.users.editProfile(userid, username, email);
+        res.json(r);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "nope", e})
+    }
+});
+
+// Gets userid of person logged in without a db call --
+router.use('/who', passport.authenticate('jwt'), async (req: ReqUser, res) => {
+    try {
+        const userid = req.user.id;
+        res.json(userid);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "nope", e})
+    }
+});
+
 router.use('/disable', passport.authenticate('jwt'), async (req: ReqUser, res) => {
     try {
         const userid = req.user.id;

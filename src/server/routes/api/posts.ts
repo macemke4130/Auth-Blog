@@ -4,23 +4,23 @@ import db from '../../db';
 
 const router = express.Router();
 
-router.get('/:id', async (req, res) => { 
+router.get('/:id', async (req, res) => {
     try {
-       const [post] = await db.posts.one(Number(req.params.id));
-       res.json(post);
+        const [post] = await db.posts.one(Number(req.params.id));
+        res.json(post);
     } catch (e) {
         console.log(e);
-        res.status(500).json({ message: "isuckatcode", e });
+        res.status(500).json({ message: "Nope.", e });
     }
 });
 
-router.get('/', async (req, res) => { 
+router.get('/', async (req, res) => {
     try {
-       const posts = await db.posts.all();
-       res.json(posts);
+        const posts = await db.posts.all();
+        res.json(posts);
     } catch (e) {
         console.log(e);
-        res.status(500).json({ message: "isuckatcode", e });
+        res.status(500).json({ message: "Nope.", e });
     }
 });
 
@@ -30,10 +30,10 @@ router.post('/', passport.authenticate('jwt'), async (req: any, res) => { // pas
         newPost.user_id = req.user.id;
         const r = await db.posts.insert(newPost);
         const newPostId = r.insertId;
-        res.json({ message: 'new post inserted', newPost,  newPostId});
+        res.json({ message: 'new post inserted', newPost, newPostId });
     } catch (e) {
         console.log(e);
-        res.status(500).json({ message: "isuckatcode", e });
+        res.status(500).json({ message: "Nope.", e });
     }
 });
 

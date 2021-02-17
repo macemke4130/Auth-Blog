@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import Compose from './pages/Compose';
 import Details from './pages/Details';
+import EditBlog from './pages/EditBlog';
+import EditProfile from './pages/EditProfile';
 import FourOhFour from './pages/FourOhFour';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -37,8 +39,14 @@ const App = (props: AppProps) => {
 				<Route path="/details/:id">
 					<Details />
 				</Route>
+				<PrivateRoute path="/editblog/:id">
+					<EditBlog />
+				</PrivateRoute>
 				<PrivateRoute path="/profile">
 					<Profile />
+				</PrivateRoute>
+				<PrivateRoute path="/editprofile">
+					<EditProfile />
 				</PrivateRoute>
 				<PrivateRoute path="/compose">
 					<Compose />

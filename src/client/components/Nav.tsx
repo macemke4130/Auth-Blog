@@ -19,7 +19,7 @@ const Nav = (props: NavProps) => {
     }
 
     return (
-        <nav>
+        <nav className="d-flex justify-content-center mb-2">
             <Link to="/"><button className="btn btn-primary">Home</button></Link>
             {isAuth ? <Link to="/compose"><button className="btn btn-primary">Compose</button></Link> : "" }
             {isAuth ? <Link to="/profile"><button className="btn btn-primary">Profile</button></Link> : "" }
@@ -31,8 +31,6 @@ const Nav = (props: NavProps) => {
 
 };
 
-interface NavProps {
-    
-}
+interface NavProps {}
 
 export default Nav;

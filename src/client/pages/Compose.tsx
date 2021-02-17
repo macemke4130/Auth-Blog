@@ -41,7 +41,15 @@ const Compose = (props: ComposeProps) => {
     }
 
     useEffect(() => {
-        getUser();
+        const user = apiService('api/users/profile')
+            .then(user => {
+                if (localStorage.getItem('isAuth') === "false") {
+                    // Token has expired or is not authorized --
+                    history.push('/login');
+                } else {
+                    getUser();
+                }
+            });
     }, []);
 
     return (

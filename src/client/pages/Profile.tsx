@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Nav from '../components/Nav';
 import apiService from '../utils/api-service';
 import Moment from 'react-moment';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 const Profile = (props: ProfileProps) => {
     const [theId, setTheId] = useState<number>(0);
@@ -13,16 +13,13 @@ const Profile = (props: ProfileProps) => {
 
     const history = useHistory();
 
-    const disableAccount = () => {
-        const r = apiService('api/users/disable')
-            .then(disabled => {
-                history.push('/register');
-            });
-    }
-
     useEffect(() => {
         const user = apiService('api/users/profile')
             .then(user => {
+                if(localStorage.getItem('isAuth') === "false") {
+                    // Token has expired or is not authorized --
+                    history.push('/login');
+                }
                 setTheId(user.id);
                 setTheEmail(user.email);
                 setTheUsername(user.username);
@@ -39,7 +36,7 @@ const Profile = (props: ProfileProps) => {
             <p>User Id Number: {theId}</p>
             <p>Member since <Moment format="MMMM DD, YYYY H:mm">{theCreatedAt}</Moment></p>
 
-            <button onClick={disableAccount} className="btn-danger">Delete Account?</button>
+            <Link to="/editprofile"><button className="btn-info">Edit Profile</button></Link>
         </>
     );
 };

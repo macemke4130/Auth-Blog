@@ -24,6 +24,8 @@ const apiService = async <T = any>(uri: string, method: "GET" | "POST" | "PUT" =
         }
 
         if (res.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.setItem('isAuth', 'false');
             throw new Error("Check Local Storage or Server Endpoint.");
         }
 

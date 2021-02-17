@@ -1,27 +1,43 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { IPost } from '../utils/types';
 import Moment from 'react-moment';
 import apiService from '../utils/api-service';
 import Nav from '../components/Nav';
+import { verify } from 'jsonwebtoken';
 
-const Details = (props: DetailsProps) => {
+const EditBlog = (props: EditBlogProps) => {
     const { id } = useParams<{ id: string }>();
     const [post, setPost] = useState<IPost>(null);
-    const [whoIsLoggedIn, setWhoIsLoggedIn] = useState<number | null>(null);
-    const [whoWroteThisPost, setWhoWroteThisPost] = useState<number>(0);
+
+    let whoIsLoggedIn: number = 0;
+    let whoWroteThisPost: number | null = null;
+    const history = useHistory();
+
+    const verifyUser = () => {
+        if (whoIsLoggedIn != whoWroteThisPost) {
+            console.log("Redirect to Public Page.");
+            history.push('/details/' + id);
+        } else {
+            console.log("Happy Editing!");
+        }
+    }
+
+    const getPost = () => {
+        apiService('/api/posts/' + id)
+            .then(post => {
+                setPost(post)
+                whoWroteThisPost = post.user_id;
+                verifyUser();
+            });
+    }
 
     useEffect(() => {
         apiService('/api/users/who')
             .then(who => {
-                setWhoIsLoggedIn(who);
-            });
-
-        apiService('/api/posts/' + id)
-            .then(post => {
-                setPost(post)
-                setWhoWroteThisPost(post.user_id);
+                whoIsLoggedIn = who;
+                getPost();
             });
     }, []);
 
@@ -33,12 +49,11 @@ const Details = (props: DetailsProps) => {
                 <div><small>Written by </small><span>{post?.username}</span></div>
                 <div><small>Pubished </small><span><Moment format="MMMM DD, YYYY H:mm">{post?.created_at}</Moment></span></div>
                 <p>{post?.content}</p>
-                {whoIsLoggedIn === whoWroteThisPost ? <Link to={"/editblog/" + id}><button>Edit Post?</button></Link> : ""}
             </div>
         </>
     );
 };
 
-interface DetailsProps { }
+interface EditBlogProps { }
 
-export default Details;
+export default EditBlog;

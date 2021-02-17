@@ -35,6 +35,7 @@ const Register = (props: RegisterProps) => {
         const token = await apiService("/auth/register/", "POST", bodyObject);
         if (token) {
             localStorage.setItem('token', token);
+            localStorage.setItem('isAuth', 'true');
             history.push('/profile');
         } else {
             console.log("Fail.");
