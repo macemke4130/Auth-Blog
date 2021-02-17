@@ -17,15 +17,12 @@ const Login = (props: LoginProps) => {
         setTheEmail(e.target.value);
     }
 
-    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTheUsername(e.target.value);
-    }
-
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setThePassword(e.target.value);
     }
 
-    const logMeIn = async () => {
+    const logMeIn = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
         const bodyObject = {
             email: theEmail,
             password: thePassword
@@ -50,9 +47,11 @@ const Login = (props: LoginProps) => {
         <>
             <Nav />
             <h1>Login Page</h1>
-            <input type="email" placeholder="email" onChange={handleEmailChange}></input>
-            <input type="password" placeholder="password" onChange={handlePasswordChange}></input>
-            <button onClick={logMeIn}>Login!</button>
+            <form>
+                <input type="email" placeholder="email" onChange={handleEmailChange}></input>
+                <input type="password" placeholder="password" onChange={handlePasswordChange}></input>
+                <button onClick={logMeIn}>Login!</button>
+            </form>
         </>
 
     );

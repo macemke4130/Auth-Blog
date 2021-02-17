@@ -9,7 +9,7 @@ const Register = (props: RegisterProps) => {
     const [theEmail, setTheEmail] = useState('');
     const [thePassword, setThePassword] = useState('');
     const [theUsername, setTheUsername] = useState('');
-    
+
     const history = useHistory();
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,14 +24,15 @@ const Register = (props: RegisterProps) => {
         setThePassword(e.target.value);
     }
 
-    const logMeIn = async () => {
+    const logMeIn = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
         const bodyObject = {
             email: theEmail,
             password: thePassword,
             username: theUsername
         }
 
-       const token = await apiService("/auth/register/", "POST", bodyObject);
+        const token = await apiService("/auth/register/", "POST", bodyObject);
         if (token) {
             localStorage.setItem('token', token);
             history.push('/profile');
@@ -49,10 +50,12 @@ const Register = (props: RegisterProps) => {
         <>
             <Nav />
             <h1>Register Page</h1>
-            <input type="email" placeholder="email" onChange={handleEmailChange}></input>
-            <input type="text" placeholder="username" onChange={handleUsernameChange}></input>
-            <input type="password" placeholder="password" onChange={handlePasswordChange}></input>
-            <button onClick={logMeIn}>Register!</button>
+            <form>
+                <input type="email" placeholder="email" onChange={handleEmailChange}></input>
+                <input type="text" placeholder="username" onChange={handleUsernameChange}></input>
+                <input type="password" placeholder="password" onChange={handlePasswordChange}></input>
+                <button onClick={logMeIn}>Register!</button>
+            </form>
         </>
 
     );

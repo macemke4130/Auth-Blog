@@ -10,6 +10,7 @@ const Compose = (props: ComposeProps) => {
     const [posts, setPosts] = useState<IPost[]>([]);
     const [theTitle, setTheTitle] = useState<string>('');
     const [theContent, setTheContent] = useState<string>('');
+    const [theTheUsername, setTheUsername] = useState<string>('');
 
     const history = useHistory();
 
@@ -34,14 +35,20 @@ const Compose = (props: ComposeProps) => {
         history.push("/details/" + r.newPostId);
     }
 
-    useEffect(() => {
+    const getUser = async () => {
+        const r = await apiService('/api/users/name');
+        setTheUsername(r[0].username);
+    }
 
+    useEffect(() => {
+        getUser();
     }, []);
 
     return (
         <>
             <Nav />
             <h1>Compose Page</h1>
+            <p>Logged in as {theTheUsername}</p>
             <div className="d-flex flex-column p-2">
                 <input type="text" placeholder="Blog Title" onChange={handleTitleChange} />
                 <textarea placeholder="Blog Content" rows={10} cols={100} onChange={handleContentChange}></textarea>

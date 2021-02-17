@@ -19,4 +19,26 @@ router.use('/profile', passport.authenticate('jwt'), async (req: ReqUser, res) =
     }
 });
 
+router.use('/name', passport.authenticate('jwt'), async (req: ReqUser, res) => {
+    try {
+        const userid = req.user.id;
+        const username = await db.users.username(userid);
+        res.json(username);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "nope", e})
+    }
+});
+
+router.use('/disable', passport.authenticate('jwt'), async (req: ReqUser, res) => {
+    try {
+        const userid = req.user.id;
+        const username = await db.users.disable(userid);
+        res.json(username);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "nope", e})
+    }
+});
+
 export default router;

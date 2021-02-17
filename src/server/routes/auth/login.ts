@@ -13,6 +13,7 @@ router.post('/', passport.authenticate('local'), async (req: any, res) => {
             email: req.user.email,
             username: req.user.username
         });
+
         res.json(token);
     } catch (e) {
         console.log(e);
